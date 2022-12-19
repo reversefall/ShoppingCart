@@ -7,13 +7,13 @@
         {% for product in Product %}
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="https://via.placeholder.com/200x150" alt="{ product_image }" class="card-img-top">
+                    <img src="https://via.placeholder.com/200x150" alt="{ product.image }" class="card-img-top">
                     <div class="card-body">
-                        <h5 class="card-title">{ product_title }</h5>
-                        <p class="card-text">{ product_description}</p>
+                        <h5 class="card-title">{ product.title }</h5>
+                        <p class="card-text">{ product.description}</p>
                         <div class="d-flex justify-content-between align-item-center">
                             <a href="#" class="btn btn-dark">View details</a>
-                            <span class="h5 mt-auto">{{ product_price }} €</span>
+                            <span class="h5 mt-auto">{ product.price } $</span>
                         </div>
                     </div>
                 </div>
