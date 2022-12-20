@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Entity;
-
 use App\Repository\CartDetailsRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -62,4 +61,5 @@ class CartDetails
 
         return $this;
     }
+
 }

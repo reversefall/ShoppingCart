@@ -21,8 +21,9 @@ class Order
     private Collection $item;
 
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
-
+    private $status = self::STATUS_CART;
+    const STATUS_CART = 'cart';
+    
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $createdAt = null;
 
@@ -49,25 +50,29 @@ class Order
 
     public function addItem(OrderItem $item): self
     {
-        if (!$this->item->contains($item)) {
-            $this->item->add($item);
-            $item->setOrderRef($this);
+        foreach ($this->getItem() as $existingItem) {
+            // The item already exists, update the quantity
+            if ($existingItem->equals($item)) {
+                $existingItem->setQuantity(
+                    $existingItem->getQuantity() + $item->getQuantity()
+                );
+                return $this;
+            }
         }
-
-        return $this;
+    
+        $this->items[] = $item;
+        $item->setOrderRef($this);
     }
 
     public function removeItem(OrderItem $item): self
     {
-        if ($this->item->removeElement($item)) {
-            // set the owning side to null (unless already changed)
-            if ($item->getOrderRef() === $this) {
-                $item->setOrderRef(null);
-            }
+        foreach ($this->getItem() as $item) {
+            $this->removeItem($item);
         }
-
+    
         return $this;
     }
+ 
 
     public function getStatus(): ?string
     {
@@ -108,4 +113,14 @@ class Order
  * @ORM\OneToMany(targetEntity=OrderItem::class, mappedBy="orderRef", cascade={"persist", "remove"}, orphanRemoval=true)
  */
 private $items;
+public function getTotal(): float
+{
+    $total = 0;
+
+    foreach ($this->getItem() as $item) {
+        $total += $item->getTotal();
+    }
+
+    return $total;
+}
 }

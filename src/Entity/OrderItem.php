@@ -29,6 +29,10 @@ class OrderItem
         return $this->id;
     }
 
+    public function equals(OrderItem $item): bool
+    {
+        return $this->getProduct()->getId() === $item->getProduct()->getId();
+    }
     public function getProduct(): ?Product
     {
         return $this->product;
@@ -64,4 +68,8 @@ class OrderItem
 
         return $this;
     }
+    public function getTotal(): float
+{
+    return $this->getProduct()->getProductPrice() * $this->getQuantity();
+}
 }
