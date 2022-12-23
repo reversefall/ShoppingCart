@@ -1,19 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+
 <div class="container">
     <h1 class="mt-3 mb-4">Products</h1>
     <div class="row">
         {% for product in Product %}
             <div class="col-md-4">
                 <div class="card mb-4">
-                    <img src="https://ae01.alicdn.com/kf/S673839974e0d443eb316e164d8e48652Y/UNI-T-UTI220B-Nhi-t-Imager-200X150-i-m-nh-Nhi-t-In-H-nh-M.jpg_.webp" alt="{ product.image }" class="card-img-top">
+                    <img src= {{product.productImage}} alt="" class="card-img-top" width="250" height="300">
                     <div class="card-body">
-                        <h5 class="card-title">{ product.title }</h5>
-                        <p class="card-text">{ product.description}</p>
+                        <h5 class="card-title">{{product.productTitle }}</h5>
+                        <p class="card-text">{{product.productDescription}}</p>
                         <div class="d-flex justify-content-between align-item-center">
                             <a href="#" class="btn btn-dark">View details</a>
-                            <span class="h5 mt-auto">{ product.price } $</span>
+                            <span class="h5 mt-auto">{{ product.productPrice }} $</span>
                         </div>
                     </div>
                 </div>
@@ -22,3 +23,4 @@
     </div>
 </div>
 {% endblock %}
+
